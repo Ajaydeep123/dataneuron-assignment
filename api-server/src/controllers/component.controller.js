@@ -13,7 +13,7 @@ const addData = asyncHandler(async (req, res) => {
         if(!(data && data.trim() !== "")){
             throw new ApiError(400, "Data is required")
         }
-
+        const startTime = performance.now();    
         await Component.deleteOne({componentId})
 
         const component = await Component.create({componentId, data})
@@ -30,6 +30,9 @@ const addData = asyncHandler(async (req, res) => {
                 new: true
             }
         )
+        const executionTime = performance.now() - startTime;
+        console.log(`Component added in ${executionTime} milliseconds`);
+
         return res.
         status(200)
         .json(new ApiResponse(200,{component,count},"Component added successfully"))
@@ -41,6 +44,8 @@ const addData = asyncHandler(async (req, res) => {
 const updateData = asyncHandler(async (req, res) => {
     try {
         const {componentId, data} = req.body
+        const startTime = performance.now();
+
         const currentComponent  = await Component.findOne({componentId})
 
         if(!currentComponent){
@@ -68,7 +73,9 @@ const updateData = asyncHandler(async (req, res) => {
             },
             { upsert: true, new: true }
         );
-
+        
+        const executionTime = performance.now() - startTime;
+        console.log(`Component updated in ${executionTime} milliseconds`);
         return res
         .status(200)
         .json(new ApiResponse(200,{newComponent,count},"Component updated successfully"))
@@ -79,7 +86,11 @@ const updateData = asyncHandler(async (req, res) => {
 
 const getCount = asyncHandler(async (req, res) => {
     try {
+        const startTime = performance.now();
+
         const count = await Count.findOne(req.count?._id)
+        const executionTime = performance.now() - startTime;
+        console.log(`Count fetched in ${executionTime} milliseconds`);
         return res
         .status(200)
         .json(new ApiResponse(200,count,"Count fetched successfully"))
