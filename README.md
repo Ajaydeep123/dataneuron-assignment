@@ -1,3 +1,11 @@
+### Client Details
+Deployment URL : <a href="https://dataneuron-assignment.vercel.app/" target="_blank">Link</a>
+<h5>A responsive resizable three panel layout which can interact with the server api to: </h5>
+1. AddData
+2. UpdateData in the db
+
+![alt text](image.png)
+
 ### API Details
 <h5>This api allows clients to interact with it and perform the following operations:</h5> </br>
 1. AddData 
